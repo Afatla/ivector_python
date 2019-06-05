@@ -25,7 +25,7 @@ LOFREQ        = 120
 HIFREQ        = 3800
 
 ZMEANSOURCE   = True
-WINDOWSIZE    = 250000.0
+WINDOWSIZE    = 250000
 USEHAMMING    = True
 PREEMCOEF     = 0.97
 NUMCHANS      = 24
@@ -150,12 +150,13 @@ fbank_mx      = features.mel_fbank_mx(winlen_nfft = WINDOWSIZE/SOURCERATE,
                                       LOFREQ      = LOFREQ,
                                       HIFREQ      = HIFREQ)
 
-scp_list = "test\lists\\testme.scp"
-vad_dir = "test\\vad"
-wav_dir = "test\wav"
-ubm_file = "models\GMM.txt.gz"
-v_file = "models\\v600_iter10.txt.gz"
-out_dir = "test\\out"
+
+scp_list = "../test/lists/testme.scp"
+vad_dir  = "../test/vad/"
+wav_dir  = "../test/wav/"
+ubm_file = "../models/GMM.txt.gz"
+v_file   = "../models/v600_iter10.txt.gz"
+out_dir  = "../test/out"
 
 print 'Loading UBM from', ubm_file
 ubm_weights, ubm_means, ubm_covs = load_ubm(ubm_file)
@@ -243,6 +244,7 @@ for ii, fn in enumerate(seg_list, 1):
             vad,n_regions,n_frames = load_vad_lab_as_bool_vec(lab_file) [:len(fea)]
         
         print '  Applying VAD [#frames=' + repr(n_frames) + ', #regions=' + repr(n_regions) + ']'
+        fea = fea[0:len(vad), ...]
         fea = fea[vad,...]
 
         if len(fea) < 3:
